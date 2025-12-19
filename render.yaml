@@ -8,7 +8,8 @@ services:
     repo: https://github.com/lukegordos/ConnectGlobal
     branch: main
     root: backend
-    buildCommand: pip install -r requirements.txt
+  # requirements.txt is in the repo root; when Render runs from backend/ use ../requirements.txt
+  buildCommand: pip install -r ../requirements.txt
     startCommand: gunicorn -k uvicorn.workers.UvicornWorker app:app --bind 0.0.0.0:$PORT
     autoDeploy: true
     plan: free
