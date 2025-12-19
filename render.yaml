@@ -10,6 +10,8 @@ services:
     root: backend
   # requirements.txt is in the repo root; when Render runs from backend/ use ../requirements.txt
   buildCommand: pip install -r ../requirements.txt
-    startCommand: gunicorn -k uvicorn.workers.UvicornWorker app:app --bind 0.0.0.0:$PORT
+  # Use uvicorn directly to avoid 'gunicorn: command not found' issues in some build images.
+  # Uvicorn is installed in the virtual environment and can be run via python -m to ensure the correct interpreter.
+  startCommand: python -m uvicorn app:app --host 0.0.0.0 --port $PORT
     autoDeploy: true
     plan: free
